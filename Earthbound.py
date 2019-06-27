@@ -3,16 +3,40 @@ import subprocess
 #Application Configuration
 lines = "================================"
 projectname = "Earthbound"
-version = "0.1"
+version = "0.3"
 domain = ()
 newline = ("\n")
 state = "good"
 
+#GlobalFunctions
+
+def welcome():
+    print (lines)
+    print ("Welcome To ", (projectname), " ", (version))
+    print (lines, '\n')
+
+
+def header():
+    print (lines)
+    print ("Earthbound ", (version))
+    print (lines, '\n')
+
+def clear():
+    import os
+    os.system("clear")
+    print (lines)
+    print ("Earthbound ", (version))
+    print (lines, '\n')
+
+
+def wait():
+    waiting = input("")
 
 #Welcome
-print (lines)
-print ("Welcome To ", (projectname), " ", (version))
-print (lines, '\n')
+welcome()
+#print (lines)
+#print ("Welcome To ", (projectname), " ", (version))
+#print (lines, '\n')
 
 domaintest = input("Please Enter Domain To Initialise.\nPlease be aware this tool could easily trigger an IDS alert.\n")
 print("Domain ", domaintest, " has been initialised. Ensure you have written permission \nbefore using this application. \n")
@@ -25,12 +49,13 @@ con = input()
 
 import os
 os.system("clear")
+header()
 print(lines)
 print("Welcome To The Main Menu")
 print(lines)
 print(newline)
 
-while state == "good":
+def main():
     print("1. Set New Target Domain")
     print("2. TCP-Ping")
     print("3. Fierce")
@@ -43,20 +68,81 @@ while state == "good":
     menu1 = input("")
 
     if menu1 == "1":
+        clear()
         print ("Setting New Target Domain")
         print(newline)
         domaintest = input("Insert New Target")
         print("Domain ", domaintest," has been initialised. Ensure you have written permission \nbefore using this application. \n")
         os.system("clear")
-        pause = input("")
+        main()
 
-    if menu1 == "2":
-        os.system("clear")
+    elif menu1 == "2":
+        clear()
         print ("What port would you like to ping?")
         hpingport = input("")
         com = "hping3 -S -c 10 -p " + " " + hpingport + " " + domaintest
         os.system(com)
-        pause = input("")
+        wait()
+        main()
+
+    elif menu1 == "3":
+        clear()
+        print ("Execute Fierce For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
+        fiercecon = input("")
+        if fiercecon == "yes":
+            print ("This command could take a while.. between 5 and 20 minutes")
+            fierceexe = "fierce -dns " + domaintest
+            print (domaintest)
+            #os.system(fierceexe)
+            wait()
+        else:
+            print ("command not executed.")
+            wait()
+            main()
+
+
+    if menu1 == "4":
+        clear()
+        print ("Execute NMap Probe Scan For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
+        nmapgo = input("")
+        if nmapgo == "yes":
+            print ("Identifying information of services running on target host")
+            nmappn = "nmap -sV " + domaintest
+            os.system(nmappn)
+            wait()
+        else:
+            print("Invalid Response..")
+            print("Press enter to return to main menu.")
+            wait()
+
+    if menu1 == "5":
+        clear()
+        print ("Execute NMap Banner Grab Script For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
+        nmapgo2 = input("")
+        if nmapgo2 == "yes":
+            print ("Grabbing service banner.. this command could take a while!")
+            nmapbannergrab = "nmap -sV --script=banner " + domaintest
+            os.system(nmapbannergrab)
+            wait()
+        else:
+            print("Invalid Response..")
+            print("Press enter to return to main menu.")
+            wait()
+
+    if menu1 == "6":
+        clear()
+        print ("WAF Detector")
+        print ("This menu option utilises WafW00f to detect web application firewalls.")
+        print(lines)
+        wafw00f = "wafw00f " + domaintest
+        os.system(wafw00f)
+        wait()
+
+    elif menu1 == "7":
+        print("This option will be avalible in a future release \n and will allow you to configure RC Scripts using\na step by step process guided by this application.")
+        print("Press Enter to return to the main menu.")
+        wait()
+
 
 
     elif menu1 == "8" or "exit":
@@ -64,7 +150,7 @@ while state == "good":
 
     else:
         print ("Invalid Option")
-
+main()
 # class Help:
 #     def __init__(self, master):
 #         frame = Frame(master)
