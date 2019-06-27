@@ -3,7 +3,7 @@ import subprocess
 #Application Configuration
 lines = "================================"
 projectname = "Earthbound"
-version = "0.3"
+version = "0.4"
 domain = ()
 newline = ("\n")
 state = "good"
@@ -38,11 +38,6 @@ welcome()
 #print ("Welcome To ", (projectname), " ", (version))
 #print (lines, '\n')
 
-domaintest = input("Please Enter Domain To Initialise.\nPlease be aware this tool could easily trigger an IDS alert.\n")
-print("Domain ", domaintest, " has been initialised. Ensure you have written permission \nbefore using this application. \n")
-print("Enter to continue..")
-con = input()
-
 
 #mainmenu
 
@@ -56,6 +51,11 @@ print(lines)
 print(newline)
 
 def main():
+    domaintest = input("Please Enter Domain To Initialise.\nPlease be aware this tool could easily trigger an IDS alert.\n")
+    print("Domain ", domaintest," has been initialised. Ensure you have written permission \nbefore using this application. \n")
+    print("Enter to continue..")
+    con = input()
+
     print("1. Set New Target Domain")
     print("2. TCP-Ping")
     print("3. Fierce")
@@ -71,9 +71,6 @@ def main():
         clear()
         print ("Setting New Target Domain")
         print(newline)
-        domaintest = input("Insert New Target")
-        print("Domain ", domaintest," has been initialised. Ensure you have written permission \nbefore using this application. \n")
-        os.system("clear")
         main()
 
     elif menu1 == "2":
@@ -92,8 +89,7 @@ def main():
         if fiercecon == "yes":
             print ("This command could take a while.. between 5 and 20 minutes")
             fierceexe = "fierce -dns " + domaintest
-            print (domaintest)
-            #os.system(fierceexe)
+            os.system(fierceexe)
             wait()
         else:
             print ("command not executed.")
@@ -110,10 +106,12 @@ def main():
             nmappn = "nmap -sV " + domaintest
             os.system(nmappn)
             wait()
+            main()
         else:
             print("Invalid Response..")
             print("Press enter to return to main menu.")
             wait()
+            main()
 
     if menu1 == "5":
         clear()
@@ -128,6 +126,7 @@ def main():
             print("Invalid Response..")
             print("Press enter to return to main menu.")
             wait()
+            main()
 
     if menu1 == "6":
         clear()
@@ -137,19 +136,23 @@ def main():
         wafw00f = "wafw00f " + domaintest
         os.system(wafw00f)
         wait()
+        main()
 
     elif menu1 == "7":
         print("This option will be avalible in a future release \n and will allow you to configure RC Scripts using\na step by step process guided by this application.")
         print("Press Enter to return to the main menu.")
         wait()
+        main()
 
 
 
     elif menu1 == "8" or "exit":
         state = "bad"
+        print("Goodbye.")
 
     else:
         print ("Invalid Option")
+        main()
 main()
 # class Help:
 #     def __init__(self, master):
