@@ -43,15 +43,13 @@ def main():
     print("5. NMAP Banner Grab")
     print("6. WAF Detector")
     print("7. RC Scripts")
-    print("8. Exit")
-    print("\n")
+    print("8. Exit\n")
     menu1 = input("")
 
     if menu1 == "1":
         os.system("clear")
         welcome()
-        print ("Setting New Target Domain")
-        print("\n")
+        print ("Setting New Target Domain\n")
         main()
 
     elif menu1 == "2":
@@ -103,15 +101,14 @@ def main():
             os.system(nmapbannergrab)
             wait()
         else:
-            print("Invalid Response.. \n Press enter to return to main menu.")
+            print("Invalid Response.. \n Press enter to return to main menu.\n")
             wait()
             main()
 
     if menu1 == "6":
         os.system("clear")
         welcome()
-        print ("WAF Detector\nThis menu option utilises WafW00f to detect web application firewalls.")
-        print("================================")
+        print ("WAF Detector\nThis menu option utilises WafW00f to detect web application firewalls.\n================================")
         wafw00f = "wafw00f " + domaintest
         os.system(wafw00f)
         wait()
