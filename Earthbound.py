@@ -1,32 +1,16 @@
 import subprocess
 
 #Application Configuration
-lines = "================================"
 projectname = "Earthbound"
-version = "0.4"
+version = "0.5"
 domain = ()
-newline = ("\n")
-state = "good"
 
 #GlobalFunctions
 
 def welcome():
-    print (lines)
-    print ("Welcome To ", (projectname), " ", (version))
-    print (lines, '\n')
-
-
-def header():
-    print (lines)
-    print ("Earthbound ", (version))
-    print (lines, '\n')
-
-def clear():
-    import os
-    os.system("clear")
-    print (lines)
-    print ("Earthbound ", (version))
-    print (lines, '\n')
+    print("================================")
+    print("Welcome To {} {}".format(projectname,version))
+    print ("================================", '\n')
 
 
 def wait():
@@ -44,17 +28,13 @@ welcome()
 
 import os
 os.system("clear")
-header()
-print(lines)
-print("Welcome To The Main Menu")
-print(lines)
-print(newline)
+welcome()
+print("================================\n Welcome To The Main Menu\n================================\n")
 
 def main():
     domaintest = input("Please Enter Domain To Initialise.\nPlease be aware this tool could easily trigger an IDS alert.\n")
     print("Domain ", domaintest," has been initialised. Ensure you have written permission \nbefore using this application. \n")
-    print("Enter to continue..")
-    con = input()
+    con = input("Enter to continue..")
 
     print("1. Set New Target Domain")
     print("2. TCP-Ping")
@@ -64,28 +44,29 @@ def main():
     print("6. WAF Detector")
     print("7. RC Scripts")
     print("8. Exit")
-    print(newline)
+    print("\n")
     menu1 = input("")
 
     if menu1 == "1":
-        clear()
+        os.system("clear")
+        welcome()
         print ("Setting New Target Domain")
-        print(newline)
+        print("\n")
         main()
 
     elif menu1 == "2":
-        clear()
-        print ("What port would you like to ping?")
-        hpingport = input("")
+        os.system("clear")
+        welcome()
+        hpingport = input("What port would you like to ping?")
         com = "hping3 -S -c 10 -p " + " " + hpingport + " " + domaintest
         os.system(com)
         wait()
         main()
 
     elif menu1 == "3":
-        clear()
-        print ("Execute Fierce For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
-        fiercecon = input("")
+        os.system("clear")
+        welcome()
+        fiercecon = input("Execute Fierce For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
         if fiercecon == "yes":
             print ("This command could take a while.. between 5 and 20 minutes")
             fierceexe = "fierce -dns " + domaintest
@@ -98,9 +79,9 @@ def main():
 
 
     if menu1 == "4":
-        clear()
-        print ("Execute NMap Probe Scan For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
-        nmapgo = input("")
+        os.system("clear")
+        welcome()
+        nmapgo = input("Execute NMap Probe Scan For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
         if nmapgo == "yes":
             print ("Identifying information of services running on target host")
             nmappn = "nmap -sV " + domaintest
@@ -108,46 +89,42 @@ def main():
             wait()
             main()
         else:
-            print("Invalid Response..")
-            print("Press enter to return to main menu.")
+            print("Invalid Response..\n Press enter to return to main menu.")
             wait()
             main()
 
     if menu1 == "5":
-        clear()
-        print ("Execute NMap Banner Grab Script For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
-        nmapgo2 = input("")
+        os.system("clear")
+        welcome()
+        nmapgo2 = input("Execute NMap Banner Grab Script For Target Domain?\n This will likely trigger an IDS Alert \n Type yes to continue.")
         if nmapgo2 == "yes":
             print ("Grabbing service banner.. this command could take a while!")
             nmapbannergrab = "nmap -sV --script=banner " + domaintest
             os.system(nmapbannergrab)
             wait()
         else:
-            print("Invalid Response..")
-            print("Press enter to return to main menu.")
+            print("Invalid Response.. \n Press enter to return to main menu.")
             wait()
             main()
 
     if menu1 == "6":
-        clear()
-        print ("WAF Detector")
-        print ("This menu option utilises WafW00f to detect web application firewalls.")
-        print(lines)
+        os.system("clear")
+        welcome()
+        print ("WAF Detector\nThis menu option utilises WafW00f to detect web application firewalls.")
+        print("================================")
         wafw00f = "wafw00f " + domaintest
         os.system(wafw00f)
         wait()
         main()
 
     elif menu1 == "7":
-        print("This option will be avalible in a future release \n and will allow you to configure RC Scripts using\na step by step process guided by this application.")
-        print("Press Enter to return to the main menu.")
+        print("This option will be avalible in a future release \n and will allow you to configure RC Scripts using\na step by step process guided by this application.\nPress Enter to return to the main menu.")
         wait()
         main()
 
 
 
     elif menu1 == "8" or "exit":
-        state = "bad"
         print("Goodbye.")
 
     else:
